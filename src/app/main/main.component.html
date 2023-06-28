@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="popular-suppliers">
+    <h2>Популярные поставщики</h2>
+    <ul>
+      <li *ngFor="let supplier of popularSuppliers">
+        {{ supplier.name | titlecase}} - Офферов: {{ supplier.offerCount }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="search">
+    <h2>Поиск Офферов</h2>
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Введите значение">
+    <button (click)="search()">Найти</button>
+  </div>
+
+  <div class="searched-offers">
+    <h3 *ngIf="offers.length > 0">Всего: {{ searchedTotalOffersCount }}</h3>
+    <table *ngIf="offers.length > 0">
+      <tr>
+        <th>ID</th>
+        <th>Марка</th>
+        <th>Модель</th>
+        <th>Поставщик</th>
+        <th>Дата регистрации</th>
+      </tr>
+      <tr *ngFor="let offer of offers">
+        <td>{{ offer.id}}</td>
+        <td>{{ offer.brand | titlecase}}</td>
+        <td>{{ offer.model | titlecase}}</td>
+        <td>{{ offer.supplierName | titlecase}}</td>
+        <td>{{ offer.registrationDate | date: 'dd MM yyyy HH:mm': 'UTC'}}</td>
+      </tr>
+    </table>
+    <p *ngIf="offers.length === 0">Ничего не найдено.</p>
+  </div>
+
+  <div class="all-offers">
+    <h2>Все офферы</h2>
+    <h3>Всего: {{ totalOffersCount }} </h3>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Марка</th>
+        <th>Модель</th>
+        <th>Поставщик</th>
+        <th>Дата регистрации</th>
+      </tr>
+      <tr *ngFor="let offer of allOffers">
+        <td>{{ offer.id}}</td>
+        <td>{{ offer.brand | titlecase}}</td>
+        <td>{{ offer.model | titlecase}}</td>
+        <td>{{ offer.supplierName| titlecase }}</td>
+        <td>{{ offer.registrationDate | date: 'dd MM yyyy HH:mm': 'UTC'}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
