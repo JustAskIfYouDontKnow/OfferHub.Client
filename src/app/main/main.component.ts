@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {SupplierService} from "../services/SupplierService";
+import {OfferService} from "../services/OfferService";
+
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
   popularSuppliers: any[] = [];
@@ -14,7 +16,10 @@ export class MainComponent implements OnInit {
   totalOffersCount: number = 0;
   allOffers: any[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private supplierService: SupplierService,
+    private offerService: OfferService
+  ) {}
 
   ngOnInit() {
     this.getPopularSuppliers();
@@ -22,7 +27,7 @@ export class MainComponent implements OnInit {
   }
 
   getPopularSuppliers() {
-    this.http.get<any>('http://localhost:5000/api/Supplier/GetPopularitySupplier').subscribe(response => {
+    this.supplierService.getPopularSuppliers().subscribe(response => {
       this.popularSuppliers = response;
     });
   }
@@ -37,18 +42,14 @@ export class MainComponent implements OnInit {
   }
 
   searchOffers() {
-    this.http.get<any>('http://localhost:5000/api/Offer/SearchOffers', {
-      params: {
-        searchTerm: this.searchTerm
-      }
-    }).subscribe(response => {
+    this.offerService.searchOffers(this.searchTerm).subscribe(response => {
       this.offers = response.offers;
       this.searchedTotalOffersCount = response.totalCount;
     });
   }
 
   getAllOffers() {
-    this.http.get<any>('http://localhost:5000/api/Offer/ListOffers').subscribe(response => {
+    this.offerService.getAllOffers().subscribe(response => {
       this.allOffers = response.offers;
       this.totalOffersCount = response.totalCount;
     });
