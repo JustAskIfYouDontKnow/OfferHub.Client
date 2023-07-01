@@ -14,7 +14,7 @@ export class SupplierService {
   constructor(private http: HttpClient) {}
 
   getPopularSuppliers() {
-    return this.http.get<PopularSuppliersResponse>(`${this.apiUrl}api/Supplier/GetPopularitySupplier`).pipe(
+    return this.http.get<PopularSuppliersResponse>(`${this.apiUrl}api/Supplier/GetPopularSupplier`).pipe(
       catchError((error) => {
         console.error('An error occurred:', error);
         return throwError('Something went wrong');

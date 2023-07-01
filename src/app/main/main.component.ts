@@ -13,13 +13,13 @@ import {SearchOffersResponse} from "../models/responseModel/search-offers-respon
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
-  popularSuppliers: Supplier[] = [];
-  offers: Offer[] = [];
-  allOffers: Offer[] = [];
+  protected popularSuppliers: Supplier[] = [];
+  protected offers: Offer[] = [];
+  protected allOffers: Offer[] = [];
 
-  searchTerm: string = '';
-  searchedTotalOffersCount: number = 0;
-  totalOffersCount: number = 0;
+  protected searchTerm: string = '';
+  protected searchedTotalOffersCount: number = 0;
+  protected totalOffersCount: number = 0;
 
   constructor(
     private supplierService: SupplierService,
@@ -46,17 +46,17 @@ export class MainComponent implements OnInit {
     }
   }
 
-  searchOffers() {
-    this.offerService.searchOffers(this.searchTerm).subscribe((response: SearchOffersResponse) => {
-      this.offers = response.offers;
-      this.searchedTotalOffersCount = response.totalCount;
-    });
-  }
-
   getAllOffers() {
     this.offerService.getAllOffers().subscribe((response: AllOffersResponse) => {
       this.allOffers = response.offers;
       this.totalOffersCount = response.totalCount;
+    });
+  }
+
+  searchOffers() {
+    this.offerService.searchOffers(this.searchTerm).subscribe((response: SearchOffersResponse) => {
+      this.offers = response.offers;
+      this.searchedTotalOffersCount = response.totalCount;
     });
   }
 }
